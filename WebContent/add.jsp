@@ -2,6 +2,7 @@
 <%@ page import="com.javaex.dao.GuestBookDao" %>
 
 <%
+	request.setCharacterEncoding("utf-8");
 
 	String name = request.getParameter("name");
 	String password = request.getParameter("password");
