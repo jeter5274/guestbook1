@@ -6,6 +6,7 @@
 <%@ page import="com.javaex.vo.GBVo" %>
 
 <%
+
 	GuestBookDao gbDao = new GuestBookDao();
 	List<GBVo> gbList = gbDao.getList();
 	
@@ -19,7 +20,7 @@
 	</head>
 	
 	<body>
-		<form action="./add.jsp" method="get">
+		<form action="./add.jsp" method="post">
 			<table border="1">
 				<tr>
 					<td>이름</td>
