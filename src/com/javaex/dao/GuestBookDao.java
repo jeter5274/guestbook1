@@ -76,9 +76,9 @@ public class GuestBookDao {
 			// 4.결과처리
 			while(rs.next()) {
 								
-				GBVo gbvo = new GBVo(rs.getInt("no"), rs.getString("name"), rs.getString("password"), rs.getString("content"), rs.getString("reg_date"));
+				GBVo gbVo = new GBVo(rs.getInt("no"), rs.getString("name"), rs.getString("password"), rs.getString("content"), rs.getString("reg_date"));
 				
-				GBList.add(gbvo);
+				GBList.add(gbVo);
 			}
 		} catch (SQLException e) {
 		    System.out.println("error:" + e);
@@ -145,6 +145,44 @@ public class GuestBookDao {
 		closeRs();
 		
 		return count;
+		
+	}
+	
+	public GBVo getGusetWriting(int no) {
+		
+		GBVo gbVo=null;
+		
+		connectDB();
+		
+		try {		
+			// 3. SQL문 준비 / 바인딩 / 실행
+			String query="";
+			query +=" select	no,";
+			query +="			name,";
+			query +="			password,";
+			query +="			content,";
+			query +="			reg_date";
+			query +=" from guestbook";
+			query +=" where no = ?";
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			// 4.결과처리
+			while(rs.next()) {
+								
+				gbVo = new GBVo(rs.getInt("no"), rs.getString("name"), rs.getString("password"), rs.getString("content"), rs.getString("reg_date"));
+
+			}
+		} catch (SQLException e) {
+		    System.out.println("error:" + e);
+		}
+		
+		closeRs();
+		
+		return gbVo;
 		
 	}
 }
