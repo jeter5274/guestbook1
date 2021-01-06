@@ -11,7 +11,7 @@
 	
 	GuestBookDao gbDao = new GuestBookDao();
 	
-	GBVo gbVo = gbDao.getGusetWriting(no);
+	//GBVo gbVo = gbDao.getGusetWriting(no); //삭제 시나리오 변경 - id&pw 비교 후 리턴값 활용
 %>
 <!DOCTYPE html>
 <html>
@@ -20,12 +20,16 @@
 		<title>Insert title here</title>
 	</head>
 	<body>
-		<%if(password.equals(gbVo.getPassword())) { 
-			gbDao.delete(no);
-			response.sendRedirect("./addList.jsp");
-		}else{ %>
-			비밀번호를 잘 못 입력하셨습니다.<br>
-			<a href="./deleteForm.jsp?no=<%=no%>">비밀번호 다시 입력하기</a><br>
-			<a href="./addList.jsp">메인으로 돌아가기</a>
+		<%
+			int result = gbDao.delete(no, password);
+			if(result == 0) { %>
+				비밀번호를 잘 못 입력하셨습니다.<br>
+				<a href="./deleteForm.jsp?no=<%=no%>">비밀번호 다시 입력하기</a><br>
+				<a href="./addList.jsp">메인으로 돌아가기</a>
+		<%		//response.sendRedirect("./addList.jsp");
+			}else{ %>
+				삭제되었습니다.<br>
+				<a href="./addList.jsp">메인으로 돌아가기</a>
 		<% } %>
+		
 </html>

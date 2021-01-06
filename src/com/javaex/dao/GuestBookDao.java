@@ -119,6 +119,37 @@ public class GuestBookDao {
 		return count;
 	}
 	
+	public int delete(int no, String pwd) {
+		
+		connectDB();
+		
+		try {		
+			// 3. SQL문 준비 / 바인딩 / 실행
+			String query="";
+			query +=" delete guestbook";
+			query +=" where no = ?";
+			query +=" and password = ?";
+			
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, no);
+			pstmt.setString(2, pwd);
+			
+			count = pstmt.executeUpdate();
+			
+			// 4.결과처리
+			System.out.println("[DAO] : " +count+ "건 삭제");
+			
+		} catch (SQLException e) {
+		    System.out.println("error:" + e);
+		}
+		
+		closeRs();
+		
+		return count;
+		
+	}
+/* 삭제 시나리오 변경 - id&pw 비교 후 리턴값 활용
 	public int delete(int no) {
 		
 		connectDB();
@@ -185,4 +216,5 @@ public class GuestBookDao {
 		return gbVo;
 		
 	}
+*/
 }
